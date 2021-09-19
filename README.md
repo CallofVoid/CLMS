@@ -71,9 +71,4 @@ python3 MineSweeper.py
 - game can handle maps as big as your screen and memory allows
 
 
-## Pictures
-### Inside setting.json
-![inside setting.json file](PICTURES/setting-json.jpg "inside setting.json file")
-### Ability to handle Big Maps
-![Big Map](PICTURES/big-map.jpg "handling big maps")
 
