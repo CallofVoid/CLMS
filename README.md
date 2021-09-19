@@ -70,6 +70,7 @@ python3 MineSweeper.py
 - you can change columms ,rows and mine counts in `setting.json` file
 - reading comments of file can help you understand how it works
 - game can handle maps as big as your screen and memory allows
+- calling welcome() function and entering H Gives you more information on how to play
 
 
 
