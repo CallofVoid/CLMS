@@ -6,7 +6,6 @@
   * [Description](#Description)
   * [Installation](#Installation)
   * [Important Notes](#Notes)
-  * [Pictures](#Pictures)
   * email <callofvoid0@gmail.com> link to report bugs or suggestions
 
 ## Description
