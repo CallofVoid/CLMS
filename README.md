@@ -18,6 +18,8 @@ and use data of each cell carefully to put a flag
 on all of the Mines .
 keep in mined that you win if only mine cells are flagged __NOT ALL OF THE CELLS__
 and if you choose a mine cell you will loose
+this is somehow like that but you will have to use coordiation! like this format
+number: colum 
 there's a more complete description on how the game works inside MineSweeper.py
 see the [Important Notes](#Notes) section
 
