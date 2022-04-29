@@ -1,5 +1,11 @@
 import time,random,json,os,platform
 
+def clearCLI():
+    if platform.system()=="Linux":
+        os.system("clear")
+    elif platform.system()=="Windows":
+        os.system("cls")
+
 def welcome():
     start="""
 HELLO
@@ -267,10 +273,7 @@ def retrieve(row,col):
             else:pass
     else:
         print('out of range :-/')
-    if platform.system()=="Linux":
-        os.system("clear")
-    elif platform.system()=="Windows":
-        os.system("cls")
+    clearCLI();
     show_map(showed_map)
 
 def setflag(row,col):
@@ -287,10 +290,7 @@ def setflag(row,col):
             showed_map[row-1][col-1]='\033[33m'+'○'+'\033[0m'
             if not {row:col} in flagged:
                 flagged.append({row:col})
-                if platform.system()=="Linux":
-                    os.system("clear")
-                elif platform.system()=="Windows":
-                    os.system("cls")
+                clearCLI()
                 show_map(showed_map)
         else :
             pass
@@ -304,10 +304,7 @@ def unflag(row,col):
                 flgd_before=True 
                 del(flagged[counter])
                 showed_map[row-1][col-1]='□'
-                if platform.system()=="Linux":
-                    os.system("clear")
-                elif platform.system()=="Windows":
-                    os.system("cls")
+                clearCLI()
                 show_map(showed_map)
                 break
             else:
@@ -386,10 +383,7 @@ def main_loop():
                     continue
                 if len (coords)==2:
                     retrieve(int(coords[0]),int(coords[1]))
-                    if platform.system()=="Linux":
-                        os.system("clear")
-                    elif platform.system()=="Windows":
-                        os.system("cls")
+                    clearCLI()
                     show_map(showed_map)
                 else:
                     print("invalid coords")
