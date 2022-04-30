@@ -264,23 +264,15 @@ def setflag(row,col):
                 show_map(showed_map)
 
 def unflag(row,col):
-    flgd_before=False
-    counter=0
-    #TODO: refactor
-    if not col<=0 and not row <=0 and not col>setting['mapsize']['col'] and not row>setting['mapsize']['row'] :
-        for flgd in flagged:
-            if (row,col) == flgd:
-                flgd_before=True 
-                del(flagged[counter])
-                showed_map[row-1][col-1]='□'
-                if platform.system()=="Linux":
-                    os.system("clear")
-                elif platform.system()=="Windows":
-                    os.system("cls")
-                show_map(showed_map)
-                break
-            else:
-                counter+=1  
+    if (row,col) in flagged:
+        #yes, this removes this tuple from the list. If it doesn't, it throws an exception, so you'd notice
+        flagged.remove((row,col))
+        showed_map[row-1][col-1]='□'
+        if platform.system()=="Linux":
+            os.system("clear")
+        elif platform.system()=="Windows":
+            os.system("cls")
+        show_map(showed_map)
 
 def show_map(mapp):
     
