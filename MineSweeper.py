@@ -262,8 +262,6 @@ def setflag(row,col):
                 elif platform.system()=="Windows":
                     os.system("cls")
                 show_map(showed_map)
-        else :
-            pass
 
 def unflag(row,col):
     flgd_before=False
