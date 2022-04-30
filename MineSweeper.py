@@ -83,142 +83,15 @@ def generateMap():
                 
         main_map.append(row)
     for mine in mines:
-        #TODO: refactor
-        minecol=mine[1]-1
-        minerow=mine[0]-1
-        if not minerow==0:
-            if not minerow ==setting['mapsize']['row']-1:
-                if not minecol==0:
-                    if not minecol==setting['mapsize']['col']-1:
-                        if type(main_map[minerow-1][minecol-1]) == int:
-                            main_map[minerow-1][minecol-1]+=1
-                            
-                        if type(main_map[minerow-1][minecol]) == int:
-                            main_map[minerow-1][minecol]+=1
-                            
-                        if type(main_map[minerow-1][minecol+1]) == int:
-                            main_map[minerow-1][minecol+1]+=1
-                            
-                        if type(main_map[minerow][minecol-1]) == int:
-                            main_map[minerow][minecol-1]+=1
-                            
-                        if type(main_map[minerow][minecol+1]) == int:
-                            main_map[minerow][minecol+1]+=1
-                            
-                        if type(main_map[minerow+1][minecol-1]) == int:
-                            main_map[minerow+1][minecol-1]+=1
-                        
-                        if type(main_map[minerow+1][minecol]) == int:
-                            main_map[minerow+1][minecol]+=1
-                        
-                        if type(main_map[minerow+1][minecol+1]) == int:
-                            main_map[minerow+1][minecol+1]+=1
-                            
-                    elif minecol==setting['mapsize']['col']-1:
-                        if type(main_map[minerow-1][minecol-1]) == int:
-                            main_map[minerow-1][minecol-1]+=1
-                            
-                        if type(main_map[minerow-1][minecol]) == int:
-                            main_map[minerow-1][minecol]+=1
-                            
-                        if type(main_map[minerow][minecol-1]) == int:
-                            main_map[minerow][minecol-1]+=1
-                            
-                        if type(main_map[minerow+1][minecol-1]) == int:
-                            main_map[minerow+1][minecol-1]+=1
-                        
-                        if type(main_map[minerow+1][minecol]) == int:
-                            main_map[minerow+1][minecol]+=1
-                elif minecol==0:
-                    if type(main_map[minerow-1][minecol]) == int:
-                            main_map[minerow-1][minecol]+=1
-                        
-                    if type(main_map[minerow-1][minecol+1]) == int:
-                        main_map[minerow-1][minecol+1]+=1
-                        
-                    if type(main_map[minerow][minecol+1]) == int:
-                        main_map[minerow][minecol+1]+=1
-                        
-                    if type(main_map[minerow+1][minecol]) == int:
-                            main_map[minerow+1][minecol]+=1
-                        
-                    if type(main_map[minerow+1][minecol+1]) == int:
-                        main_map[minerow+1][minecol+1]+=1
-                        
-            elif minerow ==setting['mapsize']['row']-1:
-                if not minecol==0:
-                    if not minecol==setting['mapsize']['col']-1:
-                        if type(main_map[minerow-1][minecol-1]) == int:
-                            main_map[minerow-1][minecol-1]+=1
-                            
-                        if type(main_map[minerow-1][minecol]) == int:
-                            main_map[minerow-1][minecol]+=1
-                            
-                        if type(main_map[minerow-1][minecol+1]) == int:
-                            main_map[minerow-1][minecol+1]+=1
-                            
-                        if type(main_map[minerow][minecol-1]) == int:
-                            main_map[minerow][minecol-1]+=1
-                            
-                        if type(main_map[minerow][minecol+1]) == int:
-                            main_map[minerow][minecol+1]+=1
-                        
-                    elif minecol==setting['mapsize']['col']-1:
-                        if type(main_map[minerow-1][minecol-1]) == int:
-                            main_map[minerow-1][minecol-1]+=1
-                            
-                        if type(main_map[minerow-1][minecol]) == int:
-                            main_map[minerow-1][minecol]+=1
-                            
-                        if type(main_map[minerow][minecol-1]) == int:
-                            main_map[minerow][minecol-1]+=1
-                            
-                elif minecol==0:
-                    if type(main_map[minerow-1][minecol]) == int:
-                            main_map[minerow-1][minecol]+=1
-                        
-                    if type(main_map[minerow-1][minecol+1]) == int:
-                        main_map[minerow-1][minecol+1]+=1
-                        
-                    if type(main_map[minerow][minecol+1]) == int:
-                        main_map[minerow][minecol+1]+=1
-                        
-        elif minerow==0:
-            if not minecol==0:
-                    if not minecol==setting['mapsize']['col']-1:
-                        if type(main_map[minerow][minecol-1]) == int:
-                            main_map[minerow][minecol-1]+=1
-                            
-                        if type(main_map[minerow][minecol+1]) == int:
-                            main_map[minerow][minecol+1]+=1
-                            
-                        if type(main_map[minerow+1][minecol-1]) == int:
-                            main_map[minerow+1][minecol-1]+=1
-                        
-                        if type(main_map[minerow+1][minecol]) == int:
-                            main_map[minerow+1][minecol]+=1
-                        
-                        if type(main_map[minerow+1][minecol+1]) == int:
-                            main_map[minerow+1][minecol+1]+=1
-                            
-                    elif minecol==setting['mapsize']['col']-1:
-                        if type(main_map[minerow][minecol-1]) == int:
-                            main_map[minerow][minecol-1]+=1
-                            
-                        if type(main_map[minerow+1][minecol-1]) == int:
-                            main_map[minerow+1][minecol-1]+=1
-                        
-                        if type(main_map[minerow+1][minecol]) == int:
-                            main_map[minerow+1][minecol]+=1
-            elif minecol==0:
-                if type(main_map[minerow][minecol+1]) == int:
-                    main_map[minerow][minecol+1]+=1
+        #going over the 3x3 field around the mine
+        #and incrementing the numbers
+        for row in range(mine[0]-2,mine[0]+1):
+            for col in range(mine[1]-2,mine[1]+1):
+                if row>=0 and col>=0 \
+                    and row<setting["mapsize"]["row"] and col<setting["mapsize"]["col"] \
+                    and type(main_map[row][col])==int:#don't increment if a bomb is there
                     
-                if type(main_map[minerow+1][minecol]) == int:
-                        main_map[minerow+1][minecol]+=1
-                    
-                if type(main_map[minerow+1][minecol+1]) == int:
-                    main_map[minerow+1][minecol+1]+=1
+                    main_map[row][col]+=1
     for rows in range(setting['mapsize']['row']):
         rowss=[]
         for columnss in range(setting['mapsize']['col']):
