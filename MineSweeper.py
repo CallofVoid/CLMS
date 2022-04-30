@@ -400,9 +400,15 @@ def main_loop():
             
         except KeyboardInterrupt:
             keep_alive=False
-        if flagged==mines:
-            keep_alive=False
-            result="win"
+        if len(flagged)==len(mines):
+            allflagged = True
+            for pair in flagged:
+                if pair not in mines:
+                    allflagged = False
+                    break
+            if allflagged:
+                keep_alive=False
+                result="win"
         
         
     if result=="win":
