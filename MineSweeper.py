@@ -20,12 +20,12 @@ but remember...
 
 I hate cheaters and winning by cheating is your fault :-/
 """
-    for line in start.split("\n"):
+    """for line in start.split("\n"):
         for char in line:
             print("\033[32m"+char,flush=True,end="")
             time.sleep(0.05)
         print("")
-        time.sleep(0.5)
+        time.sleep(0.5)"""
 
 helper="""
 This game is baesd on coordinating system
@@ -57,25 +57,18 @@ setting=json.load(open('setting.json'))
 
 
 def init_mine():
-    def checksum(row,col):
-        for mine in mines:
-            if row in mine and mine[row]==col:
-                return 1
-        return 0
         
     while len(mines) < setting['minecount']:
         row=random.randint(1,setting['mapsize']['row'])
         col=random.randint(1,setting['mapsize']['col'])
-        errors=checksum(row,col)
-        if not errors==0:
-            continue
-        else:
-            mines.append({row:col})
+        #checks if this pair of coordinates already has a mine associated with it
+        if (row,col) not in mines:
+            mines.append((row,col))
 
 
 def generateMap():
     global mines
-    mines=sorted(mines, key=lambda mine: list(mine.items()))
+    mines.sort()#this just works as it seems
     rowcount=0
     for row in range(setting['mapsize']['row']):
         colcount=0
@@ -83,20 +76,16 @@ def generateMap():
         row=[]
         for col in range(setting['mapsize']['col']):
             colcount+=1
-            bombed=False
-            for eachmine in mines:
-                if rowcount in eachmine and eachmine[rowcount]==colcount:
-                    row.append("\033[31m"+'■'+"\033[0m")
-                    bombed=True
-            if bombed==True:
-                pass
+            if (rowcount,colcount) in mines:
+                row.append("\033[31m"+'■'+"\033[0m")
             else:
                 row.append(0)
                 
         main_map.append(row)
     for mine in mines:
-        minecol=list(mine.values())[0]-1
-        minerow=list(mine.keys())[0]-1
+        #TODO: refactor
+        minecol=mine[1]-1
+        minerow=mine[0]-1
         if not minerow==0:
             if not minerow ==setting['mapsize']['row']-1:
                 if not minecol==0:
@@ -239,7 +228,6 @@ def generateMap():
 def retrieve(row,col):
     global keep_alive
     global result
-    explode=False
     flagged_before=False
     if not col<=0 and not row <=0 and not col>setting['mapsize']['col'] and not row>setting['mapsize']['row'] :
         for flgd in flagged:
@@ -248,13 +236,7 @@ def retrieve(row,col):
                 break
             else: 
                 pass
-        for mine in mines:
-            if row in mine and mine[row]==col:
-                explode=True
-                break
-            else:
-                pass
-        if explode==True:
+        if (row,col) in mines:
             result='lose'
             keep_alive=False
             
@@ -403,6 +385,8 @@ def main_loop():
         if len(flagged)==len(mines):
             allflagged = True
             for pair in flagged:
+                #TODO: convert 'flagged' to tuple-list as well
+                pair = tuple(pair.items())[0]
                 if pair not in mines:
                     allflagged = False
                     break
