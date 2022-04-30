@@ -63,7 +63,7 @@ def init_mine():
                 return 1
         return 0
         
-    while mines != setting['minecount']:
+    while len(mines) < setting['minecount']:
         row=random.randint(1,setting['mapsize']['row'])
         col=random.randint(1,setting['mapsize']['col'])
         errors=checksum(row,col)
