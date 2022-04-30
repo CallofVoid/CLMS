@@ -20,12 +20,12 @@ but remember...
 
 I hate cheaters and winning by cheating is your fault :-/
 """
-    """for line in start.split("\n"):
+    for line in start.split("\n"):
         for char in line:
             print("\033[32m"+char,flush=True,end="")
             time.sleep(0.05)
         print("")
-        time.sleep(0.5)"""
+        time.sleep(0.5)
 
 helper="""
 This game is baesd on coordinating system
