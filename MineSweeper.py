@@ -235,9 +235,8 @@ def retrieve(row,col):
         else:
             if (row,col) not in flagged:
                 showed_map[row-1][col-1]=main_map[row-1][col-1]
-                #TODO: convert retried to tuple-list as well
-                if not {row:col} in retrieved:
-                    retrieved.append({row:col})
+                if (row,col) not in retrieved:
+                    retrieved.append((row,col))
                 else:pass
             else:pass
     else:
@@ -251,13 +250,9 @@ def retrieve(row,col):
 def setflag(row,col):
     rtrvd_before=False
     if not col<=0 and not row <=0 and not col>setting['mapsize']['col'] and not row>setting['mapsize']['row'] :
-        for retrieveddd in retrieved:
-            if row in retrieveddd and retrieveddd[row]==col:
-                rtrvd_before=True
-                print('retrieved before')
-                break
-            else: pass
-        if rtrvd_before==False:
+        if (row,col) in retrieved:
+            print('retrieved before')
+        else:
             print("not retrieved before")
             showed_map[row-1][col-1]='\033[33m'+'○'+'\033[0m'
             if (row,col) not in flagged:
