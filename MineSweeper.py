@@ -228,19 +228,15 @@ def generateMap():
 def retrieve(row,col):
     global keep_alive
     global result
-    if not col<=0 and not row <=0 and not col>setting['mapsize']['col'] and not row>setting['mapsize']['row'] :
-        if (row,col) in mines:
-            result='lose'
-            keep_alive=False
-        else:
-            if (row,col) not in flagged:
-                showed_map[row-1][col-1]=main_map[row-1][col-1]
-                if (row,col) not in retrieved:
-                    retrieved.append((row,col))
-                else:pass
-            else:pass
-    else:
+    if col<=0 or row<=0 or col>setting['mapsize']['col'] or row>setting['mapsize']['row'] :
         print('out of range :-/')
+    elif (row,col) in mines:
+        result='lose'
+        keep_alive=False
+    elif (row,col) not in flagged:
+        showed_map[row-1][col-1]=main_map[row-1][col-1]
+        if (row,col) not in retrieved:
+            retrieved.append((row,col))
     if platform.system()=="Linux":
         os.system("clear")
     elif platform.system()=="Windows":
