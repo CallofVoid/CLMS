@@ -228,21 +228,14 @@ def generateMap():
 def retrieve(row,col):
     global keep_alive
     global result
-    flagged_before=False
     if not col<=0 and not row <=0 and not col>setting['mapsize']['col'] and not row>setting['mapsize']['row'] :
-        for flgd in flagged:
-            if row in flgd and flgd[row]==col:
-                flagged_before=True
-                break
-            else: 
-                pass
         if (row,col) in mines:
             result='lose'
             keep_alive=False
-            
         else:
-            if not flagged_before==True:
+            if (row,col) not in flagged:
                 showed_map[row-1][col-1]=main_map[row-1][col-1]
+                #TODO: convert retried to tuple-list as well
                 if not {row:col} in retrieved:
                     retrieved.append({row:col})
                 else:pass
@@ -267,8 +260,8 @@ def setflag(row,col):
         if rtrvd_before==False:
             print("not retrieved before")
             showed_map[row-1][col-1]='\033[33m'+'○'+'\033[0m'
-            if not {row:col} in flagged:
-                flagged.append({row:col})
+            if (row,col) not in flagged:
+                flagged.append((row,col))
                 if platform.system()=="Linux":
                     os.system("clear")
                 elif platform.system()=="Windows":
@@ -280,9 +273,10 @@ def setflag(row,col):
 def unflag(row,col):
     flgd_before=False
     counter=0
+    #TODO: refactor
     if not col<=0 and not row <=0 and not col>setting['mapsize']['col'] and not row>setting['mapsize']['row'] :
         for flgd in flagged:
-            if row in flgd and flgd[row]==col:
+            if (row,col) == flgd:
                 flgd_before=True 
                 del(flagged[counter])
                 showed_map[row-1][col-1]='□'
@@ -385,8 +379,6 @@ def main_loop():
         if len(flagged)==len(mines):
             allflagged = True
             for pair in flagged:
-                #TODO: convert 'flagged' to tuple-list as well
-                pair = tuple(pair.items())[0]
                 if pair not in mines:
                     allflagged = False
                     break
