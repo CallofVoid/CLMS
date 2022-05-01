@@ -147,11 +147,11 @@ def unflag(row,col):
 def show_map(mapp):
     
     for i in range(setting['mapsize']['col']+1):
-        print(f"\033[36m{i:4d}\033[0m",end="")
+        print(f"\033[36m{i:<4d}\033[0m",end="")
     print('column\n')
     rowc=1
     for i,row in enumerate(mapp,1):
-        print("\033[36m{i:4d}\033[0m",end='')
+        print(f"\033[36m{i:<4d}\033[0m",end='')
         for col in row:
             print(col,end='   ')
             
@@ -160,11 +160,11 @@ def show_map(mapp):
 
 def main_loop():
     for i in range(setting['mapsize']['col']+1):
-        print("\033[36m{i:4d}\033[0m",end='')
+        print(f"\033[36m{i:<4d}\033[0m",end='')
     print('column\n')
     rowc=1
     for i,row in enumerate(showed_map,1):
-        print("\033[36m{counter:4d}\033[0m",end='')
+        print(f"\033[36m{i:<4d}\033[0m",end='')
         for col in row:
             print(col,end='   ')
             
