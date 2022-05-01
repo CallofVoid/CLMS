@@ -3,20 +3,20 @@ import time,random,json,os,platform
 def welcome():
     start="""
 HELLO
-Wlcome to MineSweeper in commandline format
-this game is made by github.com/CallofVoid
-If you want to stop the game you can send `Q` or CTRL+C
-For reading help send `H`
+Welcome to MineSweeper in commandline format.
+This game is made by github.com/CallofVoid.
+If you want to stop the game you can send `Q` or CTRL+C.
+For reading help, send `H`.
 
 
 
 and ...
 
 
-if you think its boring to do all this step by step
-you can simply edit the script and call show_map(main_map) function to see the main map or print(mines) to locate mines and other kind of cheating 
+If you think it's boring to do all this step by step,
+you can simply edit the script and call show_map(main_map) to see the main map or print(mines) to locate mines or do other kind of cheating.
 
-but remember...
+But remember...
 
 I hate cheaters and winning by cheating is your fault :-/
 """
@@ -28,21 +28,22 @@ I hate cheaters and winning by cheating is your fault :-/
         time.sleep(0.5)
 
 helper="""
-This game is baesd on coordinating system
-it means that you can retrieve data of a cell by entering its coordinates in this format:
-row:column
+This game is based on a coordinate system.
+That means that you can retrieve data of a cell by entering its coordinates in this format:
+    row:column
 
-you can set a flag on the cell that you guess theres a mine under it in this way:
-row:column-sf
+If you guess that a mine is below a cell, you can mark it as such this way:
+    row:column-sf
 
-unglagging a flagged cell by :
-row:col-uf
-if you retrieve a cell with mine all of the mines are exploded
-and if only the mine cells are flagged you win
+You can unflag a flagged cell via:
+    row:col-uf
+
+If you retrieve a cell with a mine within, all of the mines explode,
+and if only the mine cells are flagged, you win.
 
 H to show this message again
 
-Q or CTRL-C to stop game and exit(progress won't be saved)
+Q or CTRL-C to stop game and exit (progress won't be saved)
 
 """
 
@@ -205,16 +206,16 @@ def main_loop():
         
     if result=="win":
         show_map(main_map)
-        print("\033[37mYou've nuteralized all of the mines in this field")
+        print("\033[37mYou've neutralized all of the mines in this field.")
         exit(0)
     elif result=="lose":
         show_map(main_map)
-        print('KABOOOM! you detonated a mine and it caused the whole area turn into a ruin\n ... ah-choo!\n sorry i have alergy to burnt gun powder and napalm smell')
+        print("KABOOOM! You detonated a mine and it caused the whole area turn into ruins\n ... ah-choo!\n Sorry, I'm allergic to burnt gun powder and napalm smell.")
         exit(2)
     elif result==None:
-        print("game stoped without any result :(")
+        print("Game stopped without any result :(")
         exit(1)
-welcome() #comment this if to skip the intro dialogs
+welcome() #comment this to skip the intro dialog
 init_mine()#creating mines with unique location
 generateMap()
 #putting mines in map and then adding instruction numbers
