@@ -22,9 +22,9 @@ I hate cheaters and winning by cheating is your fault :-/
 """
     for line in start.split("\n"):
         for char in line:
-            print("\033[32m"+char,flush=True,end="")
+            print(f"\033[32m{char}",flush=True,end="")
             time.sleep(0.05)
-        print("")
+        print()
         time.sleep(0.5)
 
 helper="""
@@ -77,7 +77,7 @@ def generateMap():
         for col in range(setting['mapsize']['col']):
             colcount+=1
             if (rowcount,colcount) in mines:
-                row.append("\033[31m"+'■'+"\033[0m")
+                row.append("\033[31m■\033[0m")
             else:
                 row.append(0)
                 
@@ -123,7 +123,7 @@ def setflag(row,col):
             print('retrieved before')
         else:
             print("not retrieved before")
-            showed_map[row-1][col-1]='\033[33m'+'○'+'\033[0m'
+            showed_map[row-1][col-1]='\033[33m○\033[0m'
             if (row,col) not in flagged:
                 flagged.append((row,col))
                 if platform.system()=="Linux":
@@ -146,60 +146,34 @@ def unflag(row,col):
 def show_map(mapp):
     
     for i in range(setting['mapsize']['col']+1):
-        if i<10:
-            print("\033[36m"+str(i)+"\033[0m",end='   ')
-        elif i>=10 and i<100:
-            print("\033[36m"+str(i)+"\033[0m",end='  ')
-        elif i >=100:
-            print("\033[36m"+str(i)+"\033[0m",end=' ')
-    print ('column\n')
-    counter=1
+        print(f"\033[36m{i:4d}\033[0m",end="")
+    print('column\n')
     rowc=1
-    for row in mapp:
-        if counter<10:
-            print("\033[36m"+str(counter)+"\033[0m"+"   ",end='')
-            counter+=1
-        elif counter>=10:
-            print("\033[36m"+str(counter)+"\033[0m"+'  ',end='')
-            counter+=1
-        elif counter <=100 :
-            print("\033[36m"+str(counter)+"\033[0m"+' ',end='')
+    for i,row in enumerate(mapp,1):
+        print("\033[36m{i:4d}\033[0m",end='')
         for col in row:
-            print((col),end='   ')
+            print(col,end='   ')
             
-        print('\n')
+        print(end="\n\n")
     print('row')
 
 def main_loop():
     for i in range(setting['mapsize']['col']+1):
-        if i<10:
-            print("\033[36m"+str(i)+"\033[0m",end='   ')
-        elif i>=10 and i<100:
-            print("\033[36m"+str(i)+"\033[0m",end='  ')
-        elif i >=100:
-            print("\033[36m"+str(i)+"\033[0m",end=' ')
-    print ('column\n')
-    counter=1
+        print("\033[36m{i:4d}\033[0m",end='')
+    print('column\n')
     rowc=1
-    for row in showed_map:
-        if counter<10:
-            print("\033[36m"+str(counter)+"\033[0m"+"   ",end='')
-            counter+=1
-        elif counter>=10:
-            print("\033[36m"+str(counter)+"\033[0m"+'  ',end='')
-            counter+=1
-        elif counter <=100 :
-            print("\033[36m"+str(counter)+"\033[0m"+' ',end='')
+    for i,row in enumerate(showed_map,1):
+        print("\033[36m{counter:4d}\033[0m",end='')
         for col in row:
             print(col,end='   ')
             
-        print('\n')
+        print(end="\n\n")
     print('row')
     global keep_alive
     global result
     while keep_alive:
         try:
-            user_input=input('\033[32m'+'your action? [H | Q | row:col | row:col-sf]'+'\033[0m'+' :  ')
+            user_input=input('\033[32myour action? [H | Q | row:col | row:col-sf]\033[0m :  ')
             commands=user_input.split('-')
             coords=commands[0].split(':')
             if len(commands)==2:
@@ -243,7 +217,7 @@ def main_loop():
         
     if result=="win":
         show_map(main_map)
-        print('\033[37m'+"You've nuteralized all of the mines in this field")
+        print("\033[37mYou've nuteralized all of the mines in this field")
         exit(0)
     elif result=="lose":
         show_map(main_map)
