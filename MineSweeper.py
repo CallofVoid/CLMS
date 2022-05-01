@@ -70,19 +70,9 @@ def init_mine():
 def generateMap():
     global mines
     mines.sort()#this just works as it seems
-    rowcount=0
-    for row in range(setting['mapsize']['row']):
-        colcount=0
-        rowcount+=1
-        row=[]
-        for col in range(setting['mapsize']['col']):
-            colcount+=1
-            if (rowcount,colcount) in mines:
-                row.append("\033[31m■\033[0m")
-            else:
-                row.append(0)
-                
-        main_map.append(row)
+    for rowcount in range(1,setting['mapsize']['row']+1):
+        main_map.append(["\033[31m■\033[0m" if (rowcount,colcount) in mines else 0 \
+             for colcount in range(1,setting['mapsize']['col']+1)])
     for mine in mines:
         #going over the 3x3 field around the mine
         #and incrementing the numbers
@@ -94,10 +84,7 @@ def generateMap():
                     
                     main_map[row][col]+=1
     for rows in range(setting['mapsize']['row']):
-        rowss=[]
-        for columnss in range(setting['mapsize']['col']):
-            rowss.append("□")
-        showed_map.append(rowss)
+        showed_map.append(["□",]*setting['mapsize']['col'])
 
 def retrieve(row,col):
     global keep_alive
