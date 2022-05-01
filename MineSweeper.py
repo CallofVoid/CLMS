@@ -53,7 +53,8 @@ showed_map=[]
 main_map=[]
 flagged=[]
 retrieved=[]
-setting=json.load(open('setting.json'))
+with open('setting.json') as f:
+    setting=json.load(f)
 
 
 def init_mine():
