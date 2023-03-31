@@ -1,5 +1,11 @@
 import time,random,json,os,platform
 
+def clearCLI():
+    if platform.system()=="Linux":
+        os.system("clear")
+    elif platform.system()=="Windows":
+        os.system("cls")
+
 def welcome():
     start="""
 HELLO
@@ -104,10 +110,7 @@ def retrieve(row,col):
         showed_map[row-1][col-1]=main_map[row-1][col-1]
         if (row,col) not in retrieved:
             retrieved.append((row,col))
-    if platform.system()=="Linux":
-        os.system("clear")
-    elif platform.system()=="Windows":
-        os.system("cls")
+    clearCLI()
     show_map(showed_map)
 
 #flags a tile
@@ -124,10 +127,7 @@ def setflag(row,col):
             #adding coords to flags list
             if (row,col) not in flagged:
                 flagged.append((row,col))
-                if platform.system()=="Linux":
-                    os.system("clear")
-                elif platform.system()=="Windows":
-                    os.system("cls")
+                clearCLI()
                 show_map(showed_map)
 
 #removes the flag from a tile
@@ -137,10 +137,7 @@ def unflag(row,col):
         #yes, this removes this tuple from the list. If it doesn't, it throws an exception, so you'd notice
         flagged.remove((row,col))
         showed_map[row-1][col-1]='□'#setting icon for unretrieved tile
-        if platform.system()=="Linux":
-            os.system("clear")
-        elif platform.system()=="Windows":
-            os.system("cls")
+        clearCLI()
         show_map(showed_map)
 
 #prints a map to console
@@ -196,10 +193,7 @@ def main_loop():
                 if len (coords)==2:
                     #retrieving tile, clearing screen, and showing resulting map
                     retrieve(int(coords[0]),int(coords[1]))
-                    if platform.system()=="Linux":
-                        os.system("clear")
-                    elif platform.system()=="Windows":
-                        os.system("cls")
+                    clearCLI()
                     show_map(showed_map)
                 else:
                     print("invalid coords")
