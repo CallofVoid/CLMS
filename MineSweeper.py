@@ -48,18 +48,19 @@ Q or CTRL-C to stop game and exit (progress won't be saved)
 """
 
 keep_alive=True
-result=None
-mines=[]
-showed_map=[]
-main_map=[]
-flagged=[]
-retrieved=[]
+result=None# 'win' or 'lose', depending on outcome.
+mines=[]#mine coordinates as [(row,col),…]
+showed_map=[]#map that is shown to the user as a 2D list
+main_map=[]#map that is used to run checks as a 2D list
+flagged=[]#flagged tiles as [(row,col),…]
+retrieved=[]#retrieved tiles as [(row,col),…]
+
+#loading settings
 with open('setting.json') as f:
     setting=json.load(f)
 
-
+#generate mines
 def init_mine():
-        
     while len(mines) < setting['minecount']:
         row=random.randint(1,setting['mapsize']['row'])
         col=random.randint(1,setting['mapsize']['col'])
@@ -67,16 +68,18 @@ def init_mine():
         if (row,col) not in mines:
             mines.append((row,col))
 
-
+#generates the main and showed map
 def generateMap():
     global mines
-    mines.sort()#this just works as it seems
+    mines.sort()
+    #generating main map with mine positions
     for rowcount in range(1,setting['mapsize']['row']+1):
         main_map.append(["\033[31m■\033[0m" if (rowcount,colcount) in mines else 0 \
              for colcount in range(1,setting['mapsize']['col']+1)])
+    #generating mine indicators in main map
     for mine in mines:
         #going over the 3x3 field around the mine
-        #and incrementing the numbers
+        #and incrementing the mine indicators
         for row in range(mine[0]-2,mine[0]+1):
             for col in range(mine[1]-2,mine[1]+1):
                 if row>=0 and col>=0 \
@@ -84,9 +87,11 @@ def generateMap():
                     and type(main_map[row][col])==int:#don't increment if a bomb is there
                     
                     main_map[row][col]+=1
+    #generating showed map
     for rows in range(setting['mapsize']['row']):
         showed_map.append(["□",]*setting['mapsize']['col'])
 
+#checks a tile and handles the bomb beneath it, if present
 def retrieve(row,col):
     global keep_alive
     global result
@@ -105,14 +110,18 @@ def retrieve(row,col):
         os.system("cls")
     show_map(showed_map)
 
+#flags a tile
 def setflag(row,col):
     rtrvd_before=False
+    #checking boundaries
     if not col<=0 and not row <=0 and not col>setting['mapsize']['col'] and not row>setting['mapsize']['row'] :
+        #check if tile is already open
         if (row,col) in retrieved:
             print('retrieved before')
         else:
             print("not retrieved before")
-            showed_map[row-1][col-1]='\033[33m○\033[0m'
+            showed_map[row-1][col-1]='\033[33m○\033[0m'#setting 'retrieved' icon
+            #adding coords to flags list
             if (row,col) not in flagged:
                 flagged.append((row,col))
                 if platform.system()=="Linux":
@@ -121,19 +130,21 @@ def setflag(row,col):
                     os.system("cls")
                 show_map(showed_map)
 
+#removes the flag from a tile
 def unflag(row,col):
+    #do nothing if the tile isn't flagged
     if (row,col) in flagged:
         #yes, this removes this tuple from the list. If it doesn't, it throws an exception, so you'd notice
         flagged.remove((row,col))
-        showed_map[row-1][col-1]='□'
+        showed_map[row-1][col-1]='□'#setting icon for unretrieved tile
         if platform.system()=="Linux":
             os.system("clear")
         elif platform.system()=="Windows":
             os.system("cls")
         show_map(showed_map)
 
+#prints a map to console
 def show_map(mapp):
-    
     for i in range(setting['mapsize']['col']+1):
         print(f"\033[36m{i:<4d}\033[0m",end="")
     print('column\n')
@@ -162,14 +173,19 @@ def main_loop():
     global result
     while keep_alive:
         try:
+            #getting the action from the user
             user_input=input('\033[32myour action? [H | Q | row:col | row:col-sf]\033[0m :  ')
+            #splitting the coordinates and -sf, if it exists
             commands=user_input.split('-')
+            #getting coordinates
             coords=commands[0].split(':')
+            #processing setflag and unflag commands
             if len(commands)==2:
                 if commands[1]=='sf':
                     setflag(int(coords[0]),int(coords[1]))
                 elif commands[1]=='uf':
                     unflag(int(coords[0]),int(coords[1]))
+            #processing help, quit, and retrieving
             elif len(commands)==1:
                 if user_input=='H':
                     print(helper)
@@ -178,6 +194,7 @@ def main_loop():
                     keep_alive=False
                     continue
                 if len (coords)==2:
+                    #retrieving tile, clearing screen, and showing resulting map
                     retrieve(int(coords[0]),int(coords[1]))
                     if platform.system()=="Linux":
                         os.system("clear")
@@ -192,7 +209,8 @@ def main_loop():
             
             
         except KeyboardInterrupt:
-            keep_alive=False
+            keep_alive=False#Ctrl+C counts as quitting
+        #checking if all the mines, and only the mines, are flagged
         if len(flagged)==len(mines):
             allflagged = True
             for pair in flagged:
@@ -215,20 +233,9 @@ def main_loop():
     elif result==None:
         print("Game stopped without any result :(")
         exit(1)
-welcome() #comment this to skip the intro dialog
+welcome()#comment this to skip the intro dialog
 init_mine()#creating mines with unique location
-generateMap()
-#putting mines in map and then adding instruction numbers
-#based on the area that mine is located:
-#upper-left codner
-#upper-right corner
-#upper edge except for the corners
-#left edge excluding the corners
-#bottom-left corner
-#bottom-right corner
-#bottom edge except for the corners
-#right edge except for the corners
-#whole central area that is not edge or corner
+generateMap()#putting mines in map and then adding indication numbers
 
 main_loop()
 #function that demonstrates the game main_loop
