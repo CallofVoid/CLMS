@@ -45,11 +45,11 @@ You can unflag a flagged cell via:
     row:col-uf
 
 If you retrieve a cell with a mine within, all of the mines explode,
-and if only the mine cells are flagged, you win.
+and if only the mine cells are flagged, you win(yuhaa).
 
 H to show this message again
 
-Q or CTRL-C to stop game and exit (progress won't be saved)
+Q or CTRL-C to stop game and exit (game dont have save option...)
 
 """
 
@@ -171,7 +171,7 @@ def main_loop():
     while keep_alive:
         try:
             #getting the action from the user
-            user_input=input('\033[32myour action? [H | Q | row:col | row:col-sf]\033[0m :  ')
+            user_input=input('\033[32m your action? [H | Q | row:col | row:col-sf]\033[0m :  ')
             #splitting the coordinates and -sf, if it exists
             commands=user_input.split('-')
             #getting coordinates
@@ -218,7 +218,7 @@ def main_loop():
         
     if result=="win":
         show_map(main_map)
-        print("\033[37mYou've neutralized all of the mines in this field.")
+        print("\033[37m You've neutralized all of the mines in this field.")
         exit(0)
     elif result=="lose":
         show_map(main_map)
