@@ -49,7 +49,7 @@ and if only the mine cells are flagged, you win(yuhaa).
 
 H to show this message again
 
-Q or CTRL-C to stop game and exit (game dont have save option...)
+Q or CTRL-C to stop game and exit (game doesn't have save option...)
 
 """
 
