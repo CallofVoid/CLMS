@@ -7,7 +7,7 @@
   * [Installation](#Installation)
   * [Important Notes](#Notes)
   * create an issue to report bugs or suggestions
-  * Special thanks to @RiedleroD for major fixups
+  * Special thanks to [@RiedleroD](https://github.com/RiedleroD) for major fixups
 
 ## Description
 If you remember the nostalgia MineSweeper game
