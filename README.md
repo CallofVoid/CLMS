@@ -6,7 +6,8 @@
   * [Description](#Description)
   * [Installation](#Installation)
   * [Important Notes](#Notes)
-  * email <callofvoid0@gmail.com> link to report bugs or suggestions
+  * create an issue to report bugs or suggestions
+  * Special thanks to @RiedleroD for major fixups
 
 ## Description
 If you remember the nostalgia MineSweeper game
