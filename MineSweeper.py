@@ -126,6 +126,7 @@ def setflag(row,col):
                 showed_map[row-1][col-1]='🚩'#setting 'flagged' icon
                 clearCLI()
                 show_map(showed_map)
+                print("okay I put a flag here so that others don't step on it")
 
 #removes the flag from a tile
 def unflag(row,col):
@@ -136,6 +137,9 @@ def unflag(row,col):
         showed_map[row-1][col-1]='■'#setting icon for unretrieved tile
         clearCLI()
         show_map(showed_map)
+        print("picked up that flag")
+    else:
+        print("maybe there once was a flag here, but not now")
 
 #prints a map to console
 def show_map(mapp):
@@ -182,17 +186,13 @@ def main_loop():
                     elif commands[1]=='uf':
                         unflag(int(coords[0]),int(coords[1]))
                         continue
+                    else:
+                        print("I want to obey your orders, but I don't know what this command is")
                 else:
                     print("I don't know where this position is")
                     continue
             #processing help, quit, and retrieving
             elif len(commands)==1:
-                if user_input=='H':
-                    print(helper)
-                    continue
-                if user_input=='Q':
-                    keep_alive=False
-                    continue
                 if len (coords)==2:
                     if(coords[0].isnumeric() and coords[1].isnumeric()):
                         #retrieving tile, clearing screen, and showing resulting map
@@ -201,10 +201,21 @@ def main_loop():
                         show_map(showed_map)
                     else:
                         print("sorry I don't know where that position is")
-                else:
+                        continue
+                elif len(coords) >2:
                     print("the coordinates you entred is out of dimensions that i work")
+                    continue
+                if user_input=='H':
+                    print(helper)
+                    continue
+                if user_input=='Q':
+                    keep_alive=False
+                    continue
+                if len(coords)!=2 and len(commands)<=1:
+                    print("da hell ye want from me?")
             else:
                 print("I tried, but I couldn't understand what you want me to do in this format")
+                continue
             
             
             
@@ -233,7 +244,7 @@ def main_loop():
     elif result==None:
         print("Game stopped without any result :(")
         exit(1)
-welcome()#comment this to skip the intro dialog
+# welcome()#comment this out to skip the intro dialog
 init_mine()#creating mines with unique location
 generateMap()#putting mines in map and then adding indication numbers
 
