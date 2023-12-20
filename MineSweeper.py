@@ -182,10 +182,10 @@ def main_loop():
                 if(coords[0].isnumeric() and coords[1].isnumeric()):
                     if commands[1]=='sf':
                         setflag(int(coords[0]),int(coords[1]))
-                        continue
+                        
                     elif commands[1]=='uf':
                         unflag(int(coords[0]),int(coords[1]))
-                        continue
+                        
                     else:
                         print("I want to obey your orders, but I don't know what this command is")
                 else:
