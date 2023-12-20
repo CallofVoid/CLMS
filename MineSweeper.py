@@ -123,7 +123,7 @@ def setflag(row,col):
             #adding coords to flagged list
             if (row,col) not in flagged:
                 flagged.append((row,col))
-                showed_map[row-1][col-1]='\033[33m🚩\033[0m'#setting 'flagged' icon
+                showed_map[row-1][col-1]='🚩'#setting 'flagged' icon
                 clearCLI()
                 show_map(showed_map)
 
@@ -194,14 +194,17 @@ def main_loop():
                     keep_alive=False
                     continue
                 if len (coords)==2:
-                    #retrieving tile, clearing screen, and showing resulting map
-                    retrieve(int(coords[0]),int(coords[1]))
-                    clearCLI()
-                    show_map(showed_map)
+                    if(coords[0].isnumeric() and coords[1].isnumeric()):
+                        #retrieving tile, clearing screen, and showing resulting map
+                        retrieve(int(coords[0]),int(coords[1]))
+                        clearCLI()
+                        show_map(showed_map)
+                    else:
+                        print("sorry I don't know where that position is")
                 else:
-                    print("invalid coords")
+                    print("the coordinates you entred is out of dimensions that i work")
             else:
-                print('invalid format')
+                print("I tried, but I couldn't understand what you want me to do in this format")
             
             
             
