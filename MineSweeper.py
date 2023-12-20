@@ -9,22 +9,16 @@ def clearCLI():
 def welcome():
     start="""
 HELLO
-Welcome to MineSweeper in commandline format.
-This game is made by github.com/CallofVoid.
-If you want to stop the game you can send `Q` or CTRL+C.
-For reading help, send `H`.
+Welcome to MineSweeper in commandline environment originally made by github.com/CallofVoid and improved by companions.
+send `H` to display helpful tips.
 
 
 
 and ...
 
+please don't cheat
 
-If you think it's boring to do all this step by step,
-you can simply edit the script and call show_map(main_map) to see the main map or print(mines) to locate mines or do other kind of cheating.
-
-But remember...
-
-I hate cheaters and winning by cheating is your fault :-/
+I hate cheaters and winning by cheating is failure :-/
 """
     for line in start.split("\n"):
         for char in line:
@@ -38,7 +32,7 @@ This game is based on a coordinate system.
 That means that you can retrieve data of a cell by entering its coordinates in this format:
     row:column
 
-If you guess that a mine is below a cell, you can mark it as such this way:
+If you guess that there's a mine below a cell, you can mark it with a flag this way:
     row:column-sf
 
 You can unflag a flagged cell via:
@@ -67,20 +61,23 @@ with open('setting.json') as f:
 
 #generate mines
 def init_mine():
-    while len(mines) < setting['minecount']:
-        row=random.randint(1,setting['mapsize']['row'])
-        col=random.randint(1,setting['mapsize']['col'])
-        #checks if this pair of coordinates already has a mine associated with it
-        if (row,col) not in mines:
-            mines.append((row,col))
-
+    if(setting['minecount']<=setting['mapsize']['row']*setting['mapsize']['col']):
+        while len(mines) < setting['minecount']:
+            row=random.randint(1,setting['mapsize']['row'])
+            col=random.randint(1,setting['mapsize']['col'])
+            #checks if this pair of coordinates already has a mine associated with it
+            if (row,col) not in mines:
+                mines.append((row,col))
+    else:
+        print("challenging yourself with a land full of mines is good,but putting mines more than capacity of your area will have bad consequences")
+        exit(1)
 #generates the main and showed map
 def generateMap():
     global mines
     mines.sort()
     #generating main map with mine positions
     for rowcount in range(1,setting['mapsize']['row']+1):
-        main_map.append(["\033[31m■\033[0m" if (rowcount,colcount) in mines else 0 \
+        main_map.append(["\033[31m💣\033[0m" if (rowcount,colcount) in mines else 0 \
              for colcount in range(1,setting['mapsize']['col']+1)])
     #generating mine indicators in main map
     for mine in mines:
@@ -95,7 +92,7 @@ def generateMap():
                     main_map[row][col]+=1
     #generating showed map
     for rows in range(setting['mapsize']['row']):
-        showed_map.append(["□",]*setting['mapsize']['col'])
+        showed_map.append(["■",]*setting['mapsize']['col'])
 
 #checks a tile and handles the bomb beneath it, if present
 def retrieve(row,col):
@@ -120,13 +117,13 @@ def setflag(row,col):
     if not col<=0 and not row <=0 and not col>setting['mapsize']['col'] and not row>setting['mapsize']['row'] :
         #check if tile is already open
         if (row,col) in retrieved:
-            print('retrieved before')
+            print('you tried to aftermath after the fact')
         else:
-            print("not retrieved before")
-            showed_map[row-1][col-1]='\033[33m○\033[0m'#setting 'retrieved' icon
-            #adding coords to flags list
+            print("I remember you flagged this cell, double checking is not necessary")#if flagging is successful this message will not be seen by human eye
+            #adding coords to flagged list
             if (row,col) not in flagged:
                 flagged.append((row,col))
+                showed_map[row-1][col-1]='\033[33m🚩\033[0m'#setting 'flagged' icon
                 clearCLI()
                 show_map(showed_map)
 
@@ -136,7 +133,7 @@ def unflag(row,col):
     if (row,col) in flagged:
         #yes, this removes this tuple from the list. If it doesn't, it throws an exception, so you'd notice
         flagged.remove((row,col))
-        showed_map[row-1][col-1]='□'#setting icon for unretrieved tile
+        showed_map[row-1][col-1]='■'#setting icon for unretrieved tile
         clearCLI()
         show_map(showed_map)
 
@@ -172,16 +169,22 @@ def main_loop():
         try:
             #getting the action from the user
             user_input=input('\033[32myour action? [H | Q | row:col | row:col-sf]\033[0m :  ')
-            #splitting the coordinates and -sf, if it exists
+            #splitting the coordinates and -sf or -uf, if they exist
             commands=user_input.split('-')
             #getting coordinates
             coords=commands[0].split(':')
             #processing setflag and unflag commands
             if len(commands)==2:
-                if commands[1]=='sf':
-                    setflag(int(coords[0]),int(coords[1]))
-                elif commands[1]=='uf':
-                    unflag(int(coords[0]),int(coords[1]))
+                if(coords[0].isnumeric() and coords[1].isnumeric()):
+                    if commands[1]=='sf':
+                        setflag(int(coords[0]),int(coords[1]))
+                        continue
+                    elif commands[1]=='uf':
+                        unflag(int(coords[0]),int(coords[1]))
+                        continue
+                else:
+                    print("I don't know where this position is")
+                    continue
             #processing help, quit, and retrieving
             elif len(commands)==1:
                 if user_input=='H':
