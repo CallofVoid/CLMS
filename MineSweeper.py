@@ -77,7 +77,7 @@ def generateMap():
     mines.sort()
     #generating main map with mine positions
     for rowcount in range(1,setting['mapsize']['row']+1):
-        main_map.append(["\033[31m💣\033[0m" if (rowcount,colcount) in mines else 0 \
+        main_map.append(["\033[1;31m●\033[0m" if (rowcount,colcount) in mines else 0 \
              for colcount in range(1,setting['mapsize']['col']+1)])
     #generating mine indicators in main map
     for mine in mines:
@@ -123,7 +123,7 @@ def setflag(row,col):
             #adding coords to flagged list
             if (row,col) not in flagged:
                 flagged.append((row,col))
-                showed_map[row-1][col-1]='🚩'#setting 'flagged' icon
+                showed_map[row-1][col-1]='\033[1;33m?\033[0m'#setting 'flagged' icon
                 clearCLI()
                 show_map(showed_map)
                 print("okay I put a flag here so that others don't step on it")
